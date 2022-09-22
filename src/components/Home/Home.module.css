@@ -1,0 +1,11 @@
+.homeWrap {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeTitle {
+    color: rgb(182, 134, 182);
+    font-weight: 600;
+}

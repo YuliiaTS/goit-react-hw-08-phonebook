@@ -1,27 +1,21 @@
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux/es/exports';
-import { registerUser } from 'redux/auth/authOperations';
-import styles from '../RegisterForm/RegisterForm.module.css';
+import { logInUser } from 'redux/auth/authOperations';
+import { useDispatch } from 'react-redux';
 
-export default function RegisterForm() {
-  const [name, setName] = useState('');
+export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const dispatch = useDispatch();
-  
+
   const onFormSubmit = e => {
     e.preventDefault();
-    dispatch(registerUser({ name, email, password }));
-    setName('');
+    dispatch(logInUser({ email, password }));
     setEmail('');
     setPassword('');
   };
-
   return (
     <Box
       component="form"
@@ -33,30 +27,16 @@ export default function RegisterForm() {
       }}
       onSubmit={onFormSubmit}
     >
-      <h2 className={styles.signUpTitle}>Sign Up</h2>
-      <TextField
-        sx={{
-          marginBottom: 2,
-          width: 300,
-        }}
-        label="Name"
-        type="text"
-        name="name"
-        autoComplete="off"
-        onChange={e => setName(e.target.value)}
-        value={name}
-        required={true}
-      />
       <TextField
         sx={{
           marginBottom: 2,
           width: 300,
         }}
         label="Email"
-        type="email"
+        type="text"
         name="email"
-        autoComplete="off"
         value={email}
+        autoComplete="off"
         onChange={e => setEmail(e.target.value)}
         required={true}
       />
@@ -66,7 +46,7 @@ export default function RegisterForm() {
           width: 300,
         }}
         label="Password"
-        type="password"
+        type="Password"
         name="password"
         autoComplete="off"
         value={password}
@@ -75,22 +55,15 @@ export default function RegisterForm() {
       />
       <Button
         sx={{
-          width: '100%',
           fontWeight: 600,
           color: 'cornflowerblue',
+          width: 300,
         }}
         type="submit"
         variant="text"
       >
-        Sign Up
+        Log In
       </Button>
-      <div className={styles.signWrap}>
-        <p className={styles.signUpText}>or</p>
-        <Link to="/login" className={styles.signUpLink}>
-          Login
-        </Link>
-        <p className={styles.signUpText}> as a user</p>
-      </div>
     </Box>
   );
 }
