@@ -1,5 +1,5 @@
 .homeWrap {
-    height: 100vh;
+    padding-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,4 +8,5 @@
 .homeTitle {
     color: rgb(182, 134, 182);
     font-weight: 900;
+    font-size: 60px;
 }

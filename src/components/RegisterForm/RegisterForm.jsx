@@ -28,7 +28,7 @@ export default function RegisterForm() {
       sx={{
         width: 300,
         margin: '0 auto',
-        paddingTop: '100px',
+        paddingTop: '50px',
         textAlign: 'center',
       }}
       onSubmit={onFormSubmit}
@@ -66,6 +66,7 @@ export default function RegisterForm() {
           width: 300,
         }}
         label="Password"
+        placeholder="Password (at least 7 symbols)"
         type="password"
         name="password"
         autoComplete="off"

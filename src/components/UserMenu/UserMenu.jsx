@@ -9,10 +9,11 @@ export function UserMenu() {
   const userEmail = useSelector(getUserEmail);
   return (
     <div className={styles.userMenuWrap}>
-      <h2 className={styles.userMenuTitle}> Welcome {userEmail} </h2>
+      <h2 className={styles.userMenuTitle}> Welcome, {userEmail} </h2>
       <Button
         sx={{
-          color: 'white',
+          color: 'black',
+          backgroundColor: 'rgb(182, 134, 182)',
           fontWeight: 600,
           padding: '3px 8px',
           textTransform: 'none',

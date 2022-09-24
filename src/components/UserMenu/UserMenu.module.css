@@ -2,7 +2,7 @@
     text-decoration: none;
     font-weight: 500;
     font-size: 20px;
-    color: rgb(182, 134, 182);;
+    color: rgb(182, 134, 182);
     }
 
 .link:not(:last-child) {
@@ -15,7 +15,7 @@
 }
 
 .active {
-    color: grey;
+    color: black;
 }
 
 .userMenuWrap {
