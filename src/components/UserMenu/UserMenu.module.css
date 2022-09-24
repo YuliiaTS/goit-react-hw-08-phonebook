@@ -11,7 +11,7 @@
 
 .link:hover,
 .link:focus {
-    text-decoration: underline;
+    color: rgb(182, 134, 182);
 }
 
 .active {
@@ -30,7 +30,6 @@
 }
 
 .containerN {
-
     width: 768px;
     margin: 10px auto;
     display: flex;
@@ -38,7 +37,7 @@
     align-items: center;
 }
 
-.linkN {
+.linkN, link {
     color: rgb(182, 134, 182);;
     font-weight: 500;
     text-decoration: none; 
