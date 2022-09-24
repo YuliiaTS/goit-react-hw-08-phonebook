@@ -1,26 +1,34 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import ContactItem from '../ContactList/ContactItem';
 import style from '../ContactList/ContactList.module.css';
-import { useGetContactsQuery } from '../../redux/contact/contactsApi';
+import { fetchContacts } from '../../redux/contact/contactsApi';
+import { getValue, getContacts } from '../../redux/store';
 
 export default function ContactList() {
-   const { data: contacts, isLoading } = useGetContactsQuery();
-   const filter = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getValue);
 
-   const visibleContacts = contacts?.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+  const visibleContacts = contacts.filter(item =>
+    item.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-   return (
-      <ul className={style.list}>
-         {isLoading ? (
-               <p>Loading...</p>
-            ) : 
-         (visibleContacts.map(({id, name, number }) => (
-            <ContactItem
-               key={id}
-               id={id}
-               name={name}
-               number={number}
-            />
-         )))}
-      </ul>
-)};
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  return (
+    <>
+      {visibleContacts.length > 0 ? (
+        <ul className={style.list}>
+          {visibleContacts.map(({ id, name, number }) => {
+            return <ContactItem key={id} id={id} name={name} number={number} />;
+          })}
+        </ul>
+      ) : (
+        <p>Contacts' list is empty</p>
+      )}
+    </>
+  );
+}

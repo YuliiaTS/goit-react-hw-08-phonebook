@@ -1,36 +1,39 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getItems, addItems, deleteItems } from '../../services/api';
 
-export const contactsApi = createApi({
-  reducerPath: 'contactsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://6325cb284cd1a2834c44a048.mockapi.io',
-  }),
-  tagTypes: ['Contacts'],
-  endpoints: builder => ({
-    getContacts: builder.query({
-      query: () => '/contacts',
-      providesTags: ['Contacts'],
-    }),
-    addContact: builder.mutation({
-      query: ({ name, number }) => ({
-        url: '/contacts',
-        method: 'POST',
-        body: { name, number },
-      }),
-      invalidatesTags: ['Contacts'],
-    }),
-    deleteContact: builder.mutation({
-      query: contactId => ({
-        url: `/contacts/${contactId}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Contacts'],
-    }),
-  }),
-});
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await getItems();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
-export const {
-  useGetContactsQuery,
-  useAddContactMutation,
-  useDeleteContactMutation,
-} = contactsApi;
+export const addContacts = createAsyncThunk(
+  'contacts/addContacts',
+  async (contact, { rejectWithValue }) => {
+    try {
+      const { data } = await addItems(contact);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteContacts = createAsyncThunk(
+  'contacts/deleteContacts',
+  async (id, { rejectWithValue }) => {
+    try {
+      await deleteItems(id);
+
+      return id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

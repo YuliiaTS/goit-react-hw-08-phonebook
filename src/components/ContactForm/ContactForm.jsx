@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { useAddContactMutation, useGetContactsQuery } from '../../redux/contact/contactsApi';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { addContacts } from '../../redux/contact/contactsApi';
+import { getContacts } from '../../redux/store';
 import style from '../ContactForm/ContactForm.module.css';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const { data: contacts } = useGetContactsQuery();
-  const [addContact, { isLoading, error }] = useAddContactMutation();
+
+  const contacts = useSelector(getContacts);
+
+  const dispatch = useDispatch();
 
   const onSubmitForm = async e => {
     e.preventDefault();
@@ -16,13 +20,11 @@ export default function ContactForm() {
         alert(`${name} is already in contacts `);
         return;
       }
-    try {
-      await addContact({ name, number });
+      dispatch(addContacts({ name, number }));
+    
       setName('');
       setNumber('');
-    } catch {
-      console.log(error);
-    }
+
   };
 
   return (
@@ -51,7 +53,7 @@ export default function ContactForm() {
           required
         />
       </label>
-      <button className={style.addBtn} type="submit" disabled={isLoading}>
+      <button className={style.addBtn} type="submit">
         Add contact
       </button>
     </form>
